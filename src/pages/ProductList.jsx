@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import ProductCard from "../components/ProductCard";
 import Sidebar from "../components/Sidebar";
+import { apiUrl } from "../utils/api";
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -13,16 +14,16 @@ const ProductList = () => {
   const [sortOption, setSortOption] = useState("default");
 
   useEffect(() => {
-    fetch("https://fakestoreapi.com/products")
+    fetch(apiUrl("/api/products"))
       .then((res) => res.json())
       .then((data) => {
         const formatted = data.map((item) => ({
           id: item.id,
-          name: item.title,
+          name: item.title ?? item.name,
           oldPrice: item.price * 1.25,
           price: item.price,
           discount: 20,
-          rating: Math.round(item.rating.rate),
+          rating: Math.round(item.rating?.rate ?? item.rating ?? 0),
           image: item.image,
           category: item.category,
           description: item.description,
@@ -149,7 +150,7 @@ const ProductList = () => {
               <input
                 type="search"
                 className="form-control"
-                placeholder="Search by Name"
+                placeholder="Search by name or keyword..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />

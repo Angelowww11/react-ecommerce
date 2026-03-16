@@ -1,22 +1,25 @@
 import { useEffect, useState } from "react";
 import ProductCard from '../components/ProductCard';
+import { apiUrl } from "../utils/api";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetch("https://fakestoreapi.com/products")
+    fetch(apiUrl("/api/products"))
       .then((res) => res.json())
       .then((data) => {
         // Map API data to product model exactly as the PDF instructs
         const formatted = data.slice(0, 4).map(item => ({
           id: item.id,
-          name: item.title,
+          name: item.title ?? item.name,
           oldPrice: item.price * 1.25,
           price: item.price,
           discount: 20,
-          rating: Math.round(item.rating.rate),
-          image: item.image
+          rating: Math.round(item.rating?.rate ?? item.rating ?? 0),
+          image: item.image,
+          description: item.description,
+          category: item.category,
         }));
         
         setProducts(formatted);
