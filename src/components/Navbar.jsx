@@ -1,13 +1,18 @@
-import { Link, NavLink } from 'react-router-dom';
-import { useContext } from 'react';
-import { CartContext } from '../context/CartContext.jsx';
+import { Link, NavLink } from "react-router-dom";
+import { useContext } from "react";
+import { CartContext } from "../context/CartContext.jsx";
+import { ThemeContext } from "../context/ThemeContext.jsx";
+import { WishlistContext } from "../context/WishlistContext.jsx";
 
 const Navbar = () => {
   // Access global cart state
   const { cart } = useContext(CartContext);
+  const theme = useContext(ThemeContext);
+  const wishlist = useContext(WishlistContext);
   
   // Calculate total items for the badge
   const cartCount = cart.reduce((sum, item) => sum + item.qty, 0);
+  const wishlistCount = wishlist?.items?.length ?? 0;
 
   // Helper functions for dynamic styling based on active state
   const desktopLink = ({ isActive }) => isActive ? "nav-link active fw-bold" : "nav-link";
@@ -21,7 +26,10 @@ const Navbar = () => {
       <nav className="navbar navbar-expand-lg navbar-dark bg-secondary shadow-sm">
         {/* Centers the brand on mobile, aligns left on desktop */}
         <div className="container-fluid justify-content-center justify-content-lg-start">
-          <Link className="navbar-brand fw-bold" to="/">A.O.P.</Link>
+          <Link className="navbar-brand fw-bold d-flex align-items-center gap-2" to="/">
+            <span className="brand-mark">PF</span>
+            <span>PixelForge Gear</span>
+          </Link>
           
           {/* Desktop Menu (Completely hidden on Mobile: 'd-none d-lg-flex') */}
           <div className="d-none d-lg-flex w-100 justify-content-between">
@@ -31,6 +39,9 @@ const Navbar = () => {
               </li>
               <li className="nav-item">
                   <NavLink to="/products" className={desktopLink}>Products</NavLink>
+              </li>
+              <li className="nav-item">
+                  <NavLink to="/wishlist" className={desktopLink}>Wishlist</NavLink>
               </li>
               <li className="nav-item">
                   <NavLink to="/blog" className={desktopLink}>Blog</NavLink>
@@ -44,6 +55,26 @@ const Navbar = () => {
             </ul>
 
             <ul className="navbar-nav">
+              <li className="nav-item d-flex align-items-center me-2">
+                <button
+                  type="button"
+                  className="btn btn-sm btn-outline-light"
+                  onClick={theme?.toggleTheme}
+                  aria-label="Toggle theme"
+                  title="Toggle theme"
+                >
+                  <i className={theme?.theme === "dark" ? "fas fa-moon" : "fas fa-sun"} />
+                </button>
+              </li>
+              <li className="nav-item">
+                <NavLink to="/wishlist" className={desktopLink}>
+                  <i className="fas fa-heart me-1"></i>
+                  Wishlist
+                  {wishlistCount > 0 && (
+                    <span className="badge bg-danger ms-2">{wishlistCount}</span>
+                  )}
+                </NavLink>
+              </li>
               <li className="nav-item">
                 <NavLink to="/cart" className={desktopLink}>
                   <i className="fas fa-shopping-cart me-1"></i>
@@ -76,6 +107,21 @@ const Navbar = () => {
           <NavLink to="/products" className={mobileLink}>
             <i className="fas fa-utensils fs-5 mb-1"></i>
             <span style={{ fontSize: '0.65rem' }}>Menu</span>
+          </NavLink>
+
+          <NavLink to="/wishlist" className={mobileLink}>
+            <div className="position-relative mb-1">
+              <i className="fas fa-heart fs-5"></i>
+              {wishlistCount > 0 && (
+                <span
+                  className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                  style={{ fontSize: "0.5rem", padding: "0.25em 0.4em" }}
+                >
+                  {wishlistCount}
+                </span>
+              )}
+            </div>
+            <span style={{ fontSize: "0.65rem" }}>Saved</span>
           </NavLink>
           
           <NavLink to="/blog" className={mobileLink}>

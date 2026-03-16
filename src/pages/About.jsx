@@ -3,24 +3,24 @@ const About = () => {
     <div className="container mt-5 fade-in">
       <div className="row justify-content-center">
         <div className="col-lg-8 text-center slide-up">
-          <h2 className="mb-4">About A.O.P. Restaurant</h2>
+          <h2 className="mb-4">About PixelForge Gear</h2>
           <p className="lead mb-4">
-            Welcome to A.O.P., where passion meets flavor. We serve the freshest ingredients 
-            crafted into unforgettable meals.
+            PixelForge Gear is a modern gaming accessories concept store — focused on
+            clean aesthetics, comfortable ergonomics, and great value.
           </p>
           <div className="card shadow-sm p-4 mb-4 hover-zoom">
             <p>
-              Established in 2024, our goal is to provide high-quality dining experiences 
-              at affordable prices. Whether you are craving our signature burgers, spicy wings, 
-              or fresh seafood soups, we have something for everyone.
+              Our mission is simple: help you build a setup you love coming back to.
+              From keyboards and headsets to everyday desk essentials, we curate gear
+              that looks sharp and performs well.
             </p>
             <p>
-              We believe in sustainable sourcing and supporting local farmers. Every dish 
-              prepared in our kitchen tells a story of tradition and innovation.
+              This project is a frontend-only React app that demonstrates product
+              search, filtering, sorting, wishlist favorites, and a light/dark theme.
             </p>
           </div>
           <p className="text-muted">
-            This website is built using React, Vite, Bootstrap, and FontAwesome.
+            Built using React, Vite, Bootstrap, and FontAwesome.
           </p>
         </div>
       </div>

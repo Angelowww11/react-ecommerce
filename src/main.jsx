@@ -6,6 +6,8 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import './index.css' 
 import App from './App.jsx'
 import { CartProvider } from './context/CartContext.jsx'
+import { ThemeProvider } from "./context/ThemeContext.jsx";
+import { WishlistProvider } from "./context/WishlistContext.jsx";
 
 // NEW: Register Service Worker for PWA
 if ('serviceWorker' in navigator) {
@@ -22,8 +24,12 @@ if ('serviceWorker' in navigator) {
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <CartProvider>
-      <App />
-    </CartProvider>
+    <ThemeProvider>
+      <WishlistProvider>
+        <CartProvider>
+          <App />
+        </CartProvider>
+      </WishlistProvider>
+    </ThemeProvider>
   </StrictMode>,
 )
