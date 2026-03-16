@@ -1,116 +1,67 @@
-const FALLBACK_IMAGE =
-  "https://images.unsplash.com/photo-1518779578993-ec3579fee39f?auto=format&fit=crop&w=1200&h=600&q=80";
-
-const posts = [
-  {
-    id: "setup",
-    title: "Build a Clean Desk Setup (Under a Student Budget)",
-    excerpt:
-      "Small upgrades like a laptop stand, mousepad, and cable management can make your workspace feel premium—without spending a lot.",
-    category: "Setup & Workspace",
-    image:
-      "https://i.pinimg.com/1200x/ee/27/da/ee27da3857e1acff4aa6f4e7946f38bc.jpg",
-  },
-  {
-    id: "keyboard",
-    title: "Mechanical Keyboards: Switches Explained (Red vs Brown vs Blue)",
-    excerpt:
-      "Choosing the right switch changes everything—typing sound, feel, and fatigue. Here’s how to pick what fits your style.",
-    category: "Gadgets & Gear",
-    image:
-      "https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?auto=format&fit=crop&w=1200&h=600&q=80",
-  },
-  {
-    id: "headphones",
-    title: "Headphones for Focus: What to Look For in Daily Use",
-    excerpt:
-      "Comfort, isolation, mic quality, and battery life matter more than fancy specs. These are the features we recommend first.",
-    category: "Guides & Reviews",
-    image:
-      "https://i.pinimg.com/1200x/8c/db/e1/8cdbe123010c380e20f264a8fdd57938.jpg",
-  },
-];
-
-const categories = ["Setup & Workspace", "Gadgets & Gear", "Guides & Reviews"];
-
 const Blog = () => {
   return (
     <div className="container mt-5 fade-in">
       <div className="row">
+        
         {/* Sidebar */}
         <div className="col-md-3 mb-3 slide-up">
           <div className="sticky-sidebar">
             <h4 className="mb-2">BLOG CATEGORIES</h4>
             <div className="list-group shadow-sm mb-4">
-              {categories.map((cat) => (
-                <button
-                  key={cat}
-                  type="button"
-                  className="list-group-item list-group-item-action"
-                >
-                  {cat}
-                </button>
-              ))}
+              <a href="#" className="list-group-item list-group-item-action">Food Stories</a>
+              <a href="#" className="list-group-item list-group-item-action">Recipes</a>
+              <a href="#" className="list-group-item list-group-item-action">Chef Tips</a>
             </div>
             <h4 className="mb-2">RECENT POSTS</h4>
             <div className="list-group shadow-sm">
-              {posts.map((p) => (
-                <button
-                  key={p.id}
-                  type="button"
-                  className="list-group-item list-group-item-action"
-                >
-                  {p.title}
-                </button>
-              ))}
+              <a href="#" className="list-group-item list-group-item-action">Classic Burger Story</a>
+              <a href="#" className="list-group-item list-group-item-action">Spicy Wings Story</a>
+              <a href="#" className="list-group-item list-group-item-action">Seafood Soup Story</a>
             </div>
           </div>
         </div>
 
         {/* Blog Posts */}
         <div className="col-md-9 mb-4">
-          <div className="d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-4 slide-up">
-            <div>
-              <h2 className="mb-1">Tech Shop Blog</h2>
-              <p className="text-muted mb-0">
-                Tips, guides, and gear picks from A.O.P. Tech Store.
-              </p>
-            </div>
-          </div>
-
+          <h2 className="mb-4 slide-up" style={{ animationDelay: '0.1s' }}>BLOGS</h2>
           <div className="row">
-            {posts.map((post, idx) => (
-              <div
-                className="col-12 mb-4 slide-up"
-                key={post.id}
-                style={{ animationDelay: `${0.15 + idx * 0.1}s` }}
-              >
-                <div className="card h-100 shadow-sm hover-zoom">
-                  <img
-                    src={post.image}
-                    className="card-img-top"
-                    alt={post.title}
-                    style={{ height: "300px", objectFit: "cover" }}
-                    onError={(e) => {
-                      if (e.currentTarget.src !== FALLBACK_IMAGE) {
-                        e.currentTarget.src = FALLBACK_IMAGE;
-                      }
-                    }}
-                  />
-                  <div className="card-body">
-                    <div className="d-flex justify-content-between align-items-center mb-2">
-                      <span className="badge bg-secondary">{post.category}</span>
-                      <span className="text-muted small">A.O.P. Tech Store</span>
-                    </div>
-                    <h5 className="card-title">{post.title}</h5>
-                    <p className="card-text text-muted">{post.excerpt}</p>
-                    <button className="btn btn-secondary" type="button">
-                      Read More
-                    </button>
-                  </div>
+            
+            {/* Post 1 */}
+            <div className="col-md-12 mb-4 slide-up" style={{ animationDelay: '0.2s' }}>
+              <div className="card h-100 shadow-sm hover-zoom">
+                <img src="[https://media.istockphoto.com/id/1346064470/photo/enjoying-my-favorite-cheeseburger-right-now.jpg?s=612x612&w=0&k=20&c=HhYq6zYUWSoVxtYot6QtFQl-hEf1Bl0IQ_-0w_aWl9c=](https://media.istockphoto.com/id/1346064470/photo/enjoying-my-favorite-cheeseburger-right-now.jpg?s=612x612&w=0&k=20&c=HhYq6zYUWSoVxtYot6QtFQl-hEf1Bl0IQ_-0w_aWl9c=)" className="card-img-top" alt="Burger Story" style={{ height: '300px', objectFit: 'cover' }} />
+                <div className="card-body">
+                  <h5 className="card-title">The Secret Behind Our Classic Burger</h5>
+                  <p className="card-text text-muted">Discover the history of our most popular dish and the special ingredients that make it unique.</p>
+                  <button className="btn btn-secondary">Read More</button>
                 </div>
               </div>
-            ))}
+            </div>
+
+            {/* Post 2 */}
+            <div className="col-md-12 mb-4 slide-up" style={{ animationDelay: '0.3s' }}>
+              <div className="card h-100 shadow-sm hover-zoom">
+                <img src="[https://media.istockphoto.com/id/187696383/photo/child-having-buffalo-wings.jpg?s=612x612&w=0&k=20&c=m5IxYJdfZ-R-0mLt3kk5dbX_0uv46ytea5vVgw2c_yg=](https://media.istockphoto.com/id/187696383/photo/child-having-buffalo-wings.jpg?s=612x612&w=0&k=20&c=m5IxYJdfZ-R-0mLt3kk5dbX_0uv46ytea5vVgw2c_yg=)" className="card-img-top" alt="Wings Story" style={{ height: '300px', objectFit: 'cover' }} />
+                <div className="card-body">
+                  <h5 className="card-title">Why Our Wings Are So Spicy</h5>
+                  <p className="card-text text-muted">A deep dive into the peppers and spices we use to create our signature heat.</p>
+                  <button className="btn btn-secondary">Read More</button>
+                </div>
+              </div>
+            </div>
+
+             {/* Post 3 */}
+             <div className="col-md-12 mb-4 slide-up" style={{ animationDelay: '0.4s' }}>
+              <div className="card h-100 shadow-sm hover-zoom">
+                <img src="[https://cdn.prod.website-files.com/5fe870209b4f367ca43b8b48/6822bdc8c7b5d1f5818d2926_607da5bb47737e1f1e84aab8_Seafood20is20good20for20respiratory20problems.jpeg](https://cdn.prod.website-files.com/5fe870209b4f367ca43b8b48/6822bdc8c7b5d1f5818d2926_607da5bb47737e1f1e84aab8_Seafood20is20good20for20respiratory20problems.jpeg)" className="card-img-top" alt="Soup Story" style={{ height: '300px', objectFit: 'cover' }} />
+                <div className="card-body">
+                  <h5 className="card-title">Fresh Seafood: From Ocean to Bowl</h5>
+                  <p className="card-text text-muted">How we source the freshest catch for our famous seafood soups.</p>
+                  <button className="btn btn-secondary">Read More</button>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>

@@ -1,11 +1,10 @@
-import { Link, NavLink } from "react-router-dom";
-import { useContext } from "react";
-import { CartContext } from "../context/CartContext.jsx";
-import { ThemeContext } from "../context/ThemeContext.jsx";
+import { Link, NavLink } from 'react-router-dom';
+import { useContext } from 'react';
+import { CartContext } from '../context/CartContext.jsx';
 
 const Navbar = () => {
+  // Access global cart state
   const { cart } = useContext(CartContext);
-  const { theme, toggleTheme } = useContext(ThemeContext);
   
   // Calculate total items for the badge
   const cartCount = cart.reduce((sum, item) => sum + item.qty, 0);
@@ -22,9 +21,7 @@ const Navbar = () => {
       <nav className="navbar navbar-expand-lg navbar-dark bg-secondary shadow-sm">
         {/* Centers the brand on mobile, aligns left on desktop */}
         <div className="container-fluid justify-content-center justify-content-lg-start">
-          <Link className="navbar-brand fw-bold" to="/">
-            A.O.P. Tech Store
-          </Link>
+          <Link className="navbar-brand fw-bold" to="/">A.O.P.</Link>
           
           {/* Desktop Menu (Completely hidden on Mobile: 'd-none d-lg-flex') */}
           <div className="d-none d-lg-flex w-100 justify-content-between">
@@ -46,21 +43,7 @@ const Navbar = () => {
               </li>
             </ul>
 
-            <ul className="navbar-nav align-items-center">
-              <li className="nav-item me-3">
-                <button
-                  type="button"
-                  className="btn btn-sm btn-outline-light d-flex align-items-center"
-                  onClick={toggleTheme}
-                >
-                  <i
-                    className={
-                      theme === "dark" ? "fas fa-moon me-2" : "fas fa-sun me-2"
-                    }
-                  ></i>
-                  {theme === "dark" ? "Dark" : "Light"} mode
-                </button>
-              </li>
+            <ul className="navbar-nav">
               <li className="nav-item">
                 <NavLink to="/cart" className={desktopLink}>
                   <i className="fas fa-shopping-cart me-1"></i>
@@ -77,6 +60,8 @@ const Navbar = () => {
         </div>
       </nav>
 
+      {/* --- MOBILE BOTTOM NAVIGATION --- */}
+      {/* Fixed to bottom, only visible on small screens ('d-lg-none') */}
       <div 
         className="fixed-bottom bg-secondary d-lg-none shadow-lg" 
         style={{ zIndex: 1030, paddingBottom: 'env(safe-area-inset-bottom)' }}
@@ -89,13 +74,8 @@ const Navbar = () => {
           </NavLink>
           
           <NavLink to="/products" className={mobileLink}>
-            <i className="fas fa-store fs-5 mb-1"></i>
-            <span style={{ fontSize: '0.65rem' }}>Shop</span>
-          </NavLink>
-          
-          <NavLink to="/wishlist" className={mobileLink}>
-            <i className="fas fa-heart fs-5 mb-1"></i>
-            <span style={{ fontSize: '0.65rem' }}>Wishlist</span>
+            <i className="fas fa-utensils fs-5 mb-1"></i>
+            <span style={{ fontSize: '0.65rem' }}>Menu</span>
           </NavLink>
           
           <NavLink to="/blog" className={mobileLink}>

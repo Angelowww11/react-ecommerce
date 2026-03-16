@@ -1,11 +1,38 @@
+import { useEffect, useMemo, useState } from "react";
+
+const API_BASE_URL = "https://react-ecommerce-backend-mv2v.onrender.com";
+
 const Sidebar = ({
-  categories = [],
+  categories: categoriesProp,
   selectedCategory,
   onCategoryChange,
   priceRange,
   onPriceRangeChange,
   onClearFilters,
 }) => {
+  const [fetchedCategories, setFetchedCategories] = useState([]);
+
+  useEffect(() => {
+    // If categories are provided by the parent, don't fetch.
+    if (Array.isArray(categoriesProp) && categoriesProp.length > 0) return;
+
+    fetch(`${API_BASE_URL}/api/categories`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data)) setFetchedCategories(data);
+      })
+      .catch((err) => console.error("Error fetching categories:", err));
+  }, [categoriesProp]);
+
+  const categories = useMemo(() => {
+    if (Array.isArray(categoriesProp) && categoriesProp.length > 0) {
+      return categoriesProp;
+    }
+    // Normalize fetched categories to include "all"
+    const unique = Array.from(new Set(fetchedCategories));
+    return ["all", ...unique];
+  }, [categoriesProp, fetchedCategories]);
+
   return (
     <div className="sticky-sidebar">
       <h4 className="mb-3">Filter Products</h4>
@@ -14,11 +41,14 @@ const Sidebar = ({
         {categories.map((cat) => (
           <button
             key={cat}
+            type="button"
             className={
               "list-group-item list-group-item-action" +
-              (selectedCategory === cat ? " active bg-secondary border-secondary" : "")
+              (selectedCategory === cat
+                ? " active bg-secondary border-secondary"
+                : "")
             }
-            onClick={() => onCategoryChange(cat)}
+            onClick={() => onCategoryChange?.(cat)}
           >
             {cat === "all" ? "All Categories" : cat}
           </button>
@@ -37,7 +67,7 @@ const Sidebar = ({
                 id="price-all"
                 value="all"
                 checked={priceRange === "all"}
-                onChange={(e) => onPriceRangeChange(e.target.value)}
+                onChange={(e) => onPriceRangeChange?.(e.target.value)}
               />
               <label className="form-check-label" htmlFor="price-all">
                 Any price
@@ -51,7 +81,7 @@ const Sidebar = ({
                 id="price-0-25"
                 value="0-25"
                 checked={priceRange === "0-25"}
-                onChange={(e) => onPriceRangeChange(e.target.value)}
+                onChange={(e) => onPriceRangeChange?.(e.target.value)}
               />
               <label className="form-check-label" htmlFor="price-0-25">
                 Below $25
@@ -65,7 +95,7 @@ const Sidebar = ({
                 id="price-25-50"
                 value="25-50"
                 checked={priceRange === "25-50"}
-                onChange={(e) => onPriceRangeChange(e.target.value)}
+                onChange={(e) => onPriceRangeChange?.(e.target.value)}
               />
               <label className="form-check-label" htmlFor="price-25-50">
                 $25 - $50
@@ -79,7 +109,7 @@ const Sidebar = ({
                 id="price-50-100"
                 value="50-100"
                 checked={priceRange === "50-100"}
-                onChange={(e) => onPriceRangeChange(e.target.value)}
+                onChange={(e) => onPriceRangeChange?.(e.target.value)}
               />
               <label className="form-check-label" htmlFor="price-50-100">
                 $50 - $100
@@ -93,7 +123,7 @@ const Sidebar = ({
                 id="price-100-plus"
                 value="100+"
                 checked={priceRange === "100+"}
-                onChange={(e) => onPriceRangeChange(e.target.value)}
+                onChange={(e) => onPriceRangeChange?.(e.target.value)}
               />
               <label className="form-check-label" htmlFor="price-100-plus">
                 $100 and above
@@ -103,6 +133,7 @@ const Sidebar = ({
 
           <button
             className="btn btn-outline-secondary btn-sm w-100 mt-3"
+            type="button"
             onClick={onClearFilters}
           >
             Clear filters
