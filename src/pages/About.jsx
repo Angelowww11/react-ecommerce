@@ -19,6 +19,14 @@ const About = () => {
               search, filtering, sorting, wishlist favorites, and a light/dark theme.
             </p>
           </div>
+          <div className="card shadow-sm p-4 mb-4 hover-zoom">
+            <h4>About the Developer</h4>
+            <p><strong>Name:</strong> Angelo Kacey N. Pineda</p>
+            <p><strong>School:</strong> FEU Tech</p>
+            <p>
+              As a passionate student developer, I created this e-commerce platform to showcase modern web development techniques and provide a seamless shopping experience for gaming enthusiasts.
+            </p>
+          </div>
           <p className="text-muted">
             Built using React, Vite, Bootstrap, and FontAwesome.
           </p>

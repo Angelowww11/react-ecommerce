@@ -105,23 +105,8 @@ const Navbar = () => {
           </NavLink>
           
           <NavLink to="/products" className={mobileLink}>
-            <i className="fas fa-utensils fs-5 mb-1"></i>
-            <span style={{ fontSize: '0.65rem' }}>Menu</span>
-          </NavLink>
-
-          <NavLink to="/wishlist" className={mobileLink}>
-            <div className="position-relative mb-1">
-              <i className="fas fa-heart fs-5"></i>
-              {wishlistCount > 0 && (
-                <span
-                  className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                  style={{ fontSize: "0.5rem", padding: "0.25em 0.4em" }}
-                >
-                  {wishlistCount}
-                </span>
-              )}
-            </div>
-            <span style={{ fontSize: "0.65rem" }}>Saved</span>
+            <i className="fas fa-store fs-5 mb-1"></i>
+            <span style={{ fontSize: '0.65rem' }}>Products</span>
           </NavLink>
           
           <NavLink to="/blog" className={mobileLink}>
@@ -134,27 +119,152 @@ const Navbar = () => {
             <span style={{ fontSize: '0.65rem' }}>About</span>
           </NavLink>
 
-          <NavLink to="/contact" className={mobileLink}>
-            <i className="fas fa-envelope fs-5 mb-1"></i>
-            <span style={{ fontSize: '0.65rem' }}>Contact</span>
-          </NavLink>
-          
-          <NavLink to="/cart" className={mobileLink}>
-            <div className="position-relative mb-1">
-              <i className="fas fa-shopping-cart fs-5"></i>
-              {/* Floating Mobile Badge */}
-              {cartCount > 0 && (
-                <span 
-                  className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" 
-                  style={{ fontSize: '0.5rem', padding: '0.25em 0.4em' }}
-                >
-                  {cartCount}
-                </span>
-              )}
+          <button
+            type="button"
+            className="bg-transparent border-0 p-0"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#mobileBagDrawer"
+            aria-controls="mobileBagDrawer"
+          >
+            <div className="text-white-50 text-decoration-none d-flex flex-column align-items-center">
+              <div className="position-relative mb-1">
+                <i className="fas fa-bag-shopping fs-5"></i>
+                {(cartCount > 0 || wishlistCount > 0) && (
+                  <span
+                    className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                    style={{ fontSize: "0.5rem", padding: "0.25em 0.4em" }}
+                  >
+                    {cartCount + wishlistCount}
+                  </span>
+                )}
+              </div>
+              <span style={{ fontSize: "0.65rem" }}>Bag</span>
             </div>
-            <span style={{ fontSize: '0.65rem' }}>Cart</span>
-          </NavLink>
+          </button>
 
+        </div>
+      </div>
+
+      {/* --- MOBILE: Combined Wishlist + Cart drawer --- */}
+      <div
+        className="offcanvas offcanvas-bottom d-lg-none"
+        tabIndex="-1"
+        id="mobileBagDrawer"
+        aria-labelledby="mobileBagDrawerLabel"
+        style={{ height: "70vh" }}
+      >
+        <div className="offcanvas-header">
+          <h5 className="offcanvas-title" id="mobileBagDrawerLabel">
+            Bag
+          </h5>
+          <button
+            type="button"
+            className="btn-close"
+            data-bs-dismiss="offcanvas"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div className="offcanvas-body pt-0">
+          <ul className="nav nav-pills mb-3" role="tablist">
+            <li className="nav-item" role="presentation">
+              <button
+                className="nav-link active"
+                id="bag-wishlist-tab"
+                data-bs-toggle="pill"
+                data-bs-target="#bag-wishlist"
+                type="button"
+                role="tab"
+              >
+                Wishlist{" "}
+                <span className="badge bg-secondary ms-1">{wishlistCount}</span>
+              </button>
+            </li>
+            <li className="nav-item" role="presentation">
+              <button
+                className="nav-link"
+                id="bag-cart-tab"
+                data-bs-toggle="pill"
+                data-bs-target="#bag-cart"
+                type="button"
+                role="tab"
+              >
+                Cart <span className="badge bg-secondary ms-1">{cartCount}</span>
+              </button>
+            </li>
+          </ul>
+
+          <div className="tab-content">
+            <div
+              className="tab-pane fade show active"
+              id="bag-wishlist"
+              role="tabpanel"
+              aria-labelledby="bag-wishlist-tab"
+            >
+              <div className="card p-3 shadow-sm">
+                <div className="d-flex justify-content-between align-items-center">
+                  <div>
+                    <div className="fw-semibold">Saved items</div>
+                    <div className="text-muted small">
+                      {wishlistCount} item{wishlistCount === 1 ? "" : "s"}
+                    </div>
+                  </div>
+                  <Link
+                    to="/wishlist"
+                    className="btn btn-outline-primary btn-sm"
+                    data-bs-dismiss="offcanvas"
+                  >
+                    View wishlist
+                  </Link>
+                </div>
+                {wishlistCount === 0 && (
+                  <div className="text-muted small mt-3">
+                    Tap the heart on products to save them.
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div
+              className="tab-pane fade"
+              id="bag-cart"
+              role="tabpanel"
+              aria-labelledby="bag-cart-tab"
+            >
+              <div className="card p-3 shadow-sm">
+                <div className="d-flex justify-content-between align-items-center">
+                  <div>
+                    <div className="fw-semibold">Cart</div>
+                    <div className="text-muted small">
+                      {cartCount} item{cartCount === 1 ? "" : "s"}
+                    </div>
+                  </div>
+                  <Link
+                    to="/cart"
+                    className="btn btn-outline-primary btn-sm"
+                    data-bs-dismiss="offcanvas"
+                  >
+                    View cart
+                  </Link>
+                </div>
+                {cartCount === 0 && (
+                  <div className="text-muted small mt-3">
+                    Your cart is empty. Add something from Products.
+                  </div>
+                )}
+                {cartCount > 0 && (
+                  <div className="mt-3">
+                    <Link
+                      to="/checkout"
+                      className="btn btn-success w-100"
+                      data-bs-dismiss="offcanvas"
+                    >
+                      Checkout
+                    </Link>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </>
